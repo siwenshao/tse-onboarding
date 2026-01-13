@@ -53,6 +53,7 @@ type CreateTaskBody = {
   title: string;
   description?: string;
   isChecked?: boolean;
+  assignee?: string;
 };
 
 type UpdateTaskBody = {
@@ -60,12 +61,13 @@ type UpdateTaskBody = {
   title: string;
   description?: string;
   isChecked?: boolean;
+  assignee?: string;
 };
 
 export const createTask: RequestHandler = async (req, res, next) => {
   // extract any errors that were found by the validator
   const errors = validationResult(req);
-  const { title, description, isChecked } = req.body as CreateTaskBody;
+  const { title, description, isChecked, assignee } = req.body as CreateTaskBody;
 
   try {
     // if there are errors, then this function throws an exception
@@ -75,6 +77,7 @@ export const createTask: RequestHandler = async (req, res, next) => {
       title,
       description,
       isChecked,
+      assignee,
       dateCreated: Date.now(),
     });
 
@@ -104,7 +107,7 @@ export const removeTask: RequestHandler = async (req, res, next) => {
 export const updateTask: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   const errors = validationResult(req);
-  const { _id, title, description, isChecked } = req.body as UpdateTaskBody;
+  const { _id, title, description, isChecked, assignee } = req.body as UpdateTaskBody;
 
   try {
     validationErrorParser(errors);
@@ -120,6 +123,7 @@ export const updateTask: RequestHandler = async (req, res, next) => {
       title,
       description,
       isChecked,
+      assignee,
     });
 
     // If no task found with that ID

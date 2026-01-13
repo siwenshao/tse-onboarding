@@ -119,6 +119,7 @@ export async function updateTask(task: UpdateTaskRequest): Promise<APIResult<Tas
       description: task.description,
       isChecked: task.isChecked,
       dateCreated: task.dateCreated.toISOString(),
+      assignee: task.assignee,
     };
 
     const response = await patch(`/api/task/${task._id}`, body);
