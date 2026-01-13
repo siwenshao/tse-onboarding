@@ -18,8 +18,12 @@ export function TaskItem({ task: initialTask }: TaskItemProps) {
   const handleToggleCheck = () => {
     setLoading(true);
     updateTask({
-      ...task,
+      _id: task._id,
+      title: task.title,
+      description: task.description,
       isChecked: !task.isChecked,
+      dateCreated: task.dateCreated,
+      assignee: task.assignee?._id,
     })
       .then((result) => {
         if (result.success) {
